@@ -14,7 +14,6 @@ import online.laoliang.simpleweather.db.SimpleWeatherOpenHelper;
  * SimpleWeatherDB是一个单例类，构造方法私有化，并提供了getInstance()方法来获取SimpleWeatherDB的实例
  * 从而保证全局范围内只会有一个SimpleWeatherDB的实例
  *
- * @author liang
  */
 public class SimpleWeatherDB {
 

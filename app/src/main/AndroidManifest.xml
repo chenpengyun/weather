@@ -25,7 +25,6 @@
         <activity android:name=".activity.SettingActivity"/>
         <activity android:name=".activity.AboutActivity"/>
         <activity android:name=".activity.WelcomeActivity"/>
-        <activity android:name=".activity.FeedBackACtivity"/>
         <activity
             android:name=".activity.ChooseThemeActivity"
             android:theme="@style/FloatActivity"/>

@@ -108,7 +108,7 @@ public class TimerService extends Service {
         cn = new ComponentName(getApplicationContext(), WidgetProvider.class);
         manager = AppWidgetManager.getInstance(getApplicationContext());
 
-        // 为天气图标视图注册监听事件，打开简约天气
+        // 为天气图标视图注册监听事件，打开天气
         Intent intent_1 = new Intent(this, WeatherActivity.class);
         PendingIntent pendingIntent_1 = PendingIntent.getActivity(this, 0, intent_1, 0);
         rv.setOnClickPendingIntent(R.id.widget1_weather_icon, pendingIntent_1);

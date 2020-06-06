@@ -23,10 +23,6 @@ public class AboutActivity extends Activity implements OnClickListener {
     private TextView version;
     private Button share_app;
     private Button check_welcome;
-    private Button feed_back;
-    private Button project_address;
-    private Button my_blog;
-    private Button qq_qun;
 
     private void findView() throws NameNotFoundException {
         back = (Button) findViewById(R.id.back);
@@ -42,14 +38,6 @@ public class AboutActivity extends Activity implements OnClickListener {
         share_app.setOnClickListener(this);
         check_welcome = (Button) findViewById(R.id.check_welcome);
         check_welcome.setOnClickListener(this);
-        feed_back = (Button) findViewById(R.id.feed_back);
-        feed_back.setOnClickListener(this);
-        project_address = (Button) findViewById(R.id.project_address);
-        project_address.setOnClickListener(this);
-        my_blog = (Button) findViewById(R.id.my_blog);
-        my_blog.setOnClickListener(this);
-        qq_qun = (Button) findViewById(R.id.qq_qun);
-        qq_qun.setOnClickListener(this);
     }
 
     @Override
@@ -116,31 +104,12 @@ public class AboutActivity extends Activity implements OnClickListener {
                 finish();
                 break;
             case R.id.share_app:
-                ShareUtils.share(null, "最简洁、最轻巧的天气软件：简约天气\n快来下载吧~\n\n点击下载：http://www.coolapk.com/apk/online.laoliang.simpleweather", this);
+                ShareUtils.share(null, "最简洁、最轻巧的天气软件：简单天气\n快来下载吧~\n", this);
                 break;
             case R.id.check_welcome:
                 Intent intent_welcome = new Intent(this, WelcomeActivity.class);
                 startActivity(intent_welcome);
                 finish();
-                break;
-            case R.id.feed_back:
-                Intent intent_feedback = new Intent(this, FeedBackACtivity.class);
-                startActivity(intent_feedback);
-                break;
-            case R.id.project_address:
-                Intent intent_project = new Intent(Intent.ACTION_VIEW);
-                intent_project.setData(Uri.parse("https://github.com/liangpengyv/SimpleWeather"));
-                startActivity(intent_project);
-                break;
-            case R.id.my_blog:
-                Intent intent_blog = new Intent(Intent.ACTION_VIEW);
-                intent_blog.setData(Uri.parse("http://laoliang.online/"));
-                startActivity(intent_blog);
-                break;
-            case R.id.qq_qun:
-                Intent intent_qq = new Intent(Intent.ACTION_VIEW);
-                intent_qq.setData(Uri.parse("http://jq.qq.com/?_wv=1027&k=2AgKvcH"));
-                startActivity(intent_qq);
                 break;
             default:
                 break;

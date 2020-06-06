@@ -9,9 +9,6 @@ import android.widget.Button;
 
 import online.laoliang.simpleweather.R;
 
-/**
- * Created by liang on 1/24.
- */
 public class ChooseThemeActivity extends Activity implements View.OnClickListener {
 
     private Button choose_theme_1;

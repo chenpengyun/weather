@@ -8,7 +8,6 @@ import android.database.sqlite.SQLiteOpenHelper;
 /**
  * 将三条建表语句定义成常量，然后再onCreate()方法中去执行创建
  *
- * @author liang
  */
 public class SimpleWeatherOpenHelper extends SQLiteOpenHelper {
 

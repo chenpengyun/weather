@@ -5,9 +5,7 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
-/**
- * Created by liang on 1/24.
- */
+
 public class Lunar {
     private int year;
     private int month;

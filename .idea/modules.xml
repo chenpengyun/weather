@@ -2,7 +2,9 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/Desktop-SimpleWeather.iml" filepath="$PROJECT_DIR$/Desktop-SimpleWeather.iml" group="SimpleWeather" />
       <module fileurl="file://$PROJECT_DIR$/SimpleWeather.iml" filepath="$PROJECT_DIR$/SimpleWeather.iml" />
+      <module fileurl="file://$PROJECT_DIR$/app/SimpleWeather-app.iml" filepath="$PROJECT_DIR$/app/SimpleWeather-app.iml" group="SimpleWeather/app" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
     </modules>
   </component>

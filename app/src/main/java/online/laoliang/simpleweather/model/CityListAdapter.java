@@ -15,7 +15,6 @@ import online.laoliang.simpleweather.R;
 /**
  * 已选城市列表CityList的自定义适配器
  *
- * @author liang
  */
 public class CityListAdapter extends ArrayAdapter<CityList> {
 

@@ -9,7 +9,6 @@ import java.net.URL;
 /**
  * 从服务器获取数据
  *
- * @author liang
  */
 public class HttpUtil {
 
