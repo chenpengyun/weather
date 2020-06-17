@@ -97,7 +97,65 @@
                     android:layout_width="match_parent"
                     android:layout_height="0.5dp"
                     android:background="#BEBEBE"/>
+
+                <Button
+                    android:layout_width="match_parent"
+                    android:layout_height="60dp"
+                    android:background="#00000000"
+                    android:drawableLeft="@mipmap/version"
+                    android:gravity="center_vertical"
+                    android:paddingLeft="22dp"
+                    android:text="      版本号：V1.0"
+                    android:textSize="15dp"/>
             </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@android:color/white"
+                android:orientation="vertical">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="15dp"
+                    android:layout_marginLeft="25dp"
+                    android:layout_marginTop="30dp"
+                    android:text="关于作者"
+                    android:textColor="#787878"
+                    android:textSize="14dp"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="0.5dp"
+                    android:background="#BEBEBE"/>
+
+                <Button
+                    android:layout_width="match_parent"
+                    android:layout_height="60dp"
+                    android:background="#00000000"
+                    android:drawableLeft="@mipmap/author"
+                    android:gravity="center_vertical"
+                    android:paddingLeft="22dp"
+                    android:text="      作者：陈鹏运"
+                    android:textSize="15dp"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="0.5dp"
+                    android:background="#BEBEBE"/>
+                <Button
+                    android:layout_width="match_parent"
+                    android:layout_height="60dp"
+                    android:background="#00000000"
+                    android:drawableLeft="@mipmap/schoolnum"
+                    android:gravity="center_vertical"
+                    android:paddingLeft="22dp"
+                    android:text="      学号：1708100201"
+                    android:textSize="15dp"/>
+            </LinearLayout>
+
+
 
         </LinearLayout>
     </ScrollView>

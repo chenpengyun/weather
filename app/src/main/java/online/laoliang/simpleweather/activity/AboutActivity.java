@@ -104,7 +104,7 @@ public class AboutActivity extends Activity implements OnClickListener {
                 finish();
                 break;
             case R.id.share_app:
-                ShareUtils.share(null, "最简洁、最轻巧的天气软件：简单天气\n快来下载吧~\n", this);
+                ShareUtils.share(null, "最简洁、最轻巧的软件：心情记\n快来下载吧~\n", this);
                 break;
             case R.id.check_welcome:
                 Intent intent_welcome = new Intent(this, WelcomeActivity.class);

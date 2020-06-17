@@ -6,7 +6,6 @@ import android.widget.Toast;
 /**
  * 自定义Toast弹出消息，完美实现Toast快速切换
  *
- * @author liang
  */
 public class ToastUtil {
 

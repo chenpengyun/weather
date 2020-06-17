@@ -14,14 +14,17 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-
-        <activity android:name=".activity.WeatherActivity">
+        <activity android:name="online.laoliang.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
+        <activity android:name=".activity.WeatherActivity">
+        </activity>
         <activity android:name=".activity.ChooseAreaActivity"/>
+        <activity android:name="online.laoliang.notes.EditActivity"/>
+        <activity android:name="online.laoliang.notes.NotesActivity"/>
         <activity android:name=".activity.SettingActivity"/>
         <activity android:name=".activity.AboutActivity"/>
         <activity android:name=".activity.WelcomeActivity"/>
@@ -31,7 +34,9 @@
 
         <service android:name=".service.AutoUpdateService"/>
         <service android:name=".service.TimerService"/>
-
+        <service android:name="online.laoliang.music.PlayingMusicServices"
+            android:exported="true"
+            android:enabled="true"/>
         <receiver android:name=".receiver.AutoUpdateReceiver">
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED"/>

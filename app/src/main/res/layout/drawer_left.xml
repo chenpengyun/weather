@@ -8,7 +8,7 @@
     <RelativeLayout
         android:id="@+id/title_city"
         android:layout_width="match_parent"
-        android:layout_height="170dp"
+        android:layout_height="200dp"
         android:background="@mipmap/drawer_bottom">
 
         <ImageView
@@ -53,20 +53,123 @@
             android:textSize="20dp"/>
     </RelativeLayout>
 
+
+
     <RelativeLayout
-        android:id="@+id/simple_1"
+        android:id="@+id/canlendar"
         android:layout_width="match_parent"
         android:layout_height="40dp"
         android:layout_below="@id/title_city"
         android:background="#FFFFFF">
-
-        <TextView
+        <Button
+            android:id="@+id/canlendar_btn"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginLeft="10dp"
-            android:layout_marginTop="10dp"
-            android:text="@string/city_list"
-            android:textSize="13dp"/>
+            android:layout_marginBottom="-8dp"
+            android:layout_marginLeft="-8dp"
+            android:layout_marginRight="-8dp"
+            android:layout_marginTop="-8dp"
+            android:background="#00000000"
+            android:gravity="center_vertical"
+            android:paddingLeft="65dp"
+            android:textStyle="bold"
+            android:text="日历"
+            android:textSize="15dp"/>
+
+        <ImageView
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_gravity="center"
+            android:layout_margin="10dp"
+            android:src="@mipmap/canlendar_icon"/>
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/notes"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_below="@id/canlendar"
+        android:background="#FFFFFF">
+        <Button
+            android:id="@+id/notes_btn"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="-8dp"
+            android:layout_marginLeft="-8dp"
+            android:layout_marginRight="-8dp"
+            android:layout_marginTop="-8dp"
+            android:background="#00000000"
+            android:gravity="center_vertical"
+            android:paddingLeft="65dp"
+            android:textStyle="bold"
+            android:text="日记本"
+            android:textSize="15dp"/>
+
+        <ImageView
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_gravity="center"
+            android:layout_margin="10dp"
+            android:src="@mipmap/notes_icon"/>
+    </RelativeLayout>
+
+
+    <RelativeLayout
+        android:id="@+id/music"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_below="@id/notes"
+        android:background="#FFFFFF">
+        <Button
+            android:id="@+id/music_btn"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="-8dp"
+            android:layout_marginLeft="-8dp"
+            android:layout_marginRight="-8dp"
+            android:layout_marginTop="-8dp"
+            android:background="#00000000"
+            android:gravity="center_vertical"
+            android:paddingLeft="65dp"
+            android:textStyle="bold"
+            android:text="开启/关闭音乐"
+            android:textSize="15dp"/>
+
+        <ImageView
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_gravity="center"
+            android:layout_margin="10dp"
+            android:src="@mipmap/music_icon"/>
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/simple_1"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_below="@id/music"
+        android:background="#FFFFFF">
+        <Button
+            android:id="@+id/add_city"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="-8dp"
+            android:layout_marginLeft="-8dp"
+            android:layout_marginRight="-8dp"
+            android:layout_marginTop="-8dp"
+            android:background="#00000000"
+            android:gravity="center_vertical"
+            android:paddingLeft="65dp"
+            android:text="天气预报(点击添加城市)"
+            android:textStyle="bold"
+            android:textSize="15dp"/>
+
+        <ImageView
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_gravity="center"
+            android:layout_margin="10dp"
+            android:src="@mipmap/weather_icon"/>
     </RelativeLayout>
 
     <ListView
@@ -98,6 +201,7 @@
             android:layout_marginLeft="10dp"
             android:layout_marginTop="10dp"
             android:text="@string/choose"
+            android:textStyle="bold"
             android:textSize="13dp"/>
     </RelativeLayout>
 
@@ -108,34 +212,6 @@
         android:layout_alignParentBottom="true"
         android:background="#FFFFFF"
         android:orientation="vertical">
-
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="46dp">
-
-            <Button
-                android:id="@+id/add_city"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginBottom="-8dp"
-                android:layout_marginLeft="-8dp"
-                android:layout_marginRight="-8dp"
-                android:layout_marginTop="-8dp"
-                android:background="#00000000"
-                android:gravity="center_vertical"
-                android:paddingLeft="65dp"
-                android:text="@string/add_city"
-                android:textSize="15dp"/>
-
-            <ImageView
-                android:layout_width="25dp"
-                android:layout_height="25dp"
-                android:layout_gravity="center"
-                android:layout_margin="10dp"
-                android:contentDescription="@string/add_city"
-                android:src="@mipmap/add"/>
-        </RelativeLayout>
-
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="46dp">
@@ -144,15 +220,15 @@
                 android:id="@+id/choose_theme"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_marginBottom="-8dp"
                 android:layout_marginLeft="-8dp"
-                android:layout_marginRight="-8dp"
                 android:layout_marginTop="-8dp"
+                android:layout_marginRight="-8dp"
                 android:background="#00000000"
                 android:gravity="center_vertical"
                 android:paddingLeft="65dp"
-                android:text="主题皮肤"
-                android:textSize="15dp"/>
+                android:text="主题皮肤(需重启)"
+                android:textSize="15dp"
+                android:textStyle="bold" />
 
             <ImageView
                 android:layout_width="25dp"
@@ -180,6 +256,7 @@
                 android:gravity="center_vertical"
                 android:paddingLeft="65dp"
                 android:text="@string/setting"
+                android:textStyle="bold"
                 android:textSize="15dp"/>
 
             <ImageView
@@ -200,15 +277,15 @@
                 android:id="@+id/about"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_marginBottom="-8dp"
                 android:layout_marginLeft="-8dp"
-                android:layout_marginRight="-8dp"
                 android:layout_marginTop="-8dp"
+                android:layout_marginRight="-8dp"
                 android:background="#00000000"
                 android:gravity="center_vertical"
                 android:paddingLeft="65dp"
                 android:text="@string/about"
-                android:textSize="15dp"/>
+                android:textSize="15dp"
+                android:textStyle="bold" />
 
             <ImageView
                 android:layout_width="25dp"
@@ -218,6 +295,34 @@
                 android:contentDescription="@string/about"
                 android:src="@mipmap/about"/>
         </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="46dp"
+            android:background="#FFFFFF">
+            <Button
+                android:id="@+id/exit_login"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginBottom="-8dp"
+                android:layout_marginLeft="-8dp"
+                android:layout_marginRight="-8dp"
+                android:layout_marginTop="-8dp"
+                android:background="#00000000"
+                android:gravity="center_vertical"
+                android:paddingLeft="65dp"
+                android:text="退出登录"
+                android:textStyle="bold"
+                android:textSize="15dp"/>
+
+            <ImageView
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:layout_gravity="center"
+                android:layout_margin="10dp"
+                android:src="@mipmap/exit_login"/>
+        </RelativeLayout>
+
     </LinearLayout>
 
 </RelativeLayout>

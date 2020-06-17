@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="online.laoliang.notes.NotesActivity">
+
+    <include layout="@layout/title_bar"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:orientation="horizontal"
+        android:background="#ffffff"
+        android:padding="2dp"
+        android:gravity="center_horizontal">
+        <Button
+            android:id="@+id/btn_add"
+            android:layout_width="80dp"
+            android:layout_height="40dp"
+            android:background="#00B050"
+            android:text="添加"
+            android:textColor="#ffffff"
+            android:layout_gravity="center"
+            android:layout_marginRight="8dp" />
+        <Button
+            android:id="@+id/btn_search"
+            android:layout_width="80dp"
+            android:layout_height="40dp"
+            android:background="#00B050"
+            android:text="搜索"
+            android:textColor="#ffffff"
+            android:layout_gravity="center"
+            android:layout_marginRight="8dp" />
+        <Button
+            android:id="@+id/btn_search_fanwei"
+            android:layout_width="100dp"
+            android:layout_height="40dp"
+            android:background="#00B050"
+            android:text="时间范围查询"
+            android:textColor="#ffffff"
+            android:layout_gravity="center"
+            android:layout_marginRight="8dp" />
+    </LinearLayout>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:layout_marginTop="5dp"
+        android:background="@color/colorPrimary1"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:background="@color/colorWhite">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="选择搜索条件:"
+            android:textSize="20dp"
+            android:textColor="#2f4f4f"
+            android:layout_gravity="center_vertical"/>
+        <Spinner
+            android:id="@+id/search_spinner"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="10dp"
+            android:entries="@array/search_condition_array"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:background="@color/colorWhite">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="输入匹配信息："
+            android:textSize="20dp"
+            android:textColor="#2f4f4f"
+            android:layout_gravity="center_vertical"/>
+        <EditText
+            android:id="@+id/search_input"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:hint="请输入查询内容"/>
+    </LinearLayout>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:layout_marginTop="5dp"
+        android:background="@color/colorPrimary1"/>
+
+    <LinearLayout
+        android:id="@+id/time_fanwei_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:background="@color/colorWhite">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="输入时间范围："
+            android:textSize="20dp"
+            android:gravity="center"
+            android:textColor="#2f4f4f"
+            android:layout_gravity="center_vertical"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+            <EditText
+                android:id="@+id/start_time"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="请输入开始时间:2020-06-13"/>
+            <EditText
+                android:id="@+id/end_time"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="请输入截止时间:2020-06-15"/>
+        </LinearLayout>
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:layout_marginTop="5dp"
+        android:background="@color/colorPrimary1"/>
+
+    <ListView
+        android:id="@+id/note_list"
+        android:background="#ffffff"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1" />
+</LinearLayout>

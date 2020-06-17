@@ -2,10 +2,15 @@ package online.laoliang.simpleweather.activity;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.DatePickerDialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.SharedPreferences;
+import android.media.Ringtone;
+import android.media.RingtoneManager;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.widget.DrawerLayout;
@@ -18,29 +23,32 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.io.File;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.HashMap;
 
+import online.laoliang.MainActivity;
+import online.laoliang.music.MyBroadCastReceiver;
+import online.laoliang.music.PlayingMusicServices;
+import online.laoliang.notes.NotesActivity;
 import online.laoliang.simpleweather.R;
 import online.laoliang.simpleweather.model.CityList;
 import online.laoliang.simpleweather.model.CityListAdapter;
 import online.laoliang.simpleweather.service.AutoUpdateService;
 import online.laoliang.simpleweather.util.HttpCallbackListener;
 import online.laoliang.simpleweather.util.HttpUtil;
-import online.laoliang.simpleweather.util.ScreenShotUtils;
-import online.laoliang.simpleweather.util.ShareUtils;
 import online.laoliang.simpleweather.util.ToastUtil;
 import online.laoliang.simpleweather.util.Utility;
 
 public class WeatherActivity extends Activity implements SwipeRefreshLayout.OnRefreshListener, OnClickListener {
-
+    public static String commonWeather;
     //定义当前活动的一个实例，用于在其他活动类中调用
     protected static Activity instance = null;
 
@@ -49,9 +57,6 @@ public class WeatherActivity extends Activity implements SwipeRefreshLayout.OnRe
 
     // 进度对话框
     private ProgressDialog progressDialog;
-
-    // 右侧菜单
-    private Button share_weather;
 
     // 侧滑菜单
     private DrawerLayout drawer_layout;
@@ -62,6 +67,21 @@ public class WeatherActivity extends Activity implements SwipeRefreshLayout.OnRe
     private Button choose_theme;
     private Button setting;
     private Button about;
+    private Button exit;
+
+    private Button canlendar;
+    private Button notes;
+
+    // 播放/暂停音乐
+    private Button play_music;
+    private boolean play_flag;
+    private MyBroadCastReceiver receiver;
+    /**
+     * 规定开始音乐、暂停音乐、结束音乐的标志
+     */
+    public  static final int PLAT_MUSIC=1;
+    public  static final int PAUSE_MUSIC=2;
+    public  static final int STOP_MUSIC=3;
 
     //首页天气信息页面视图
     private LinearLayout weather_info;
@@ -189,8 +209,6 @@ public class WeatherActivity extends Activity implements SwipeRefreshLayout.OnRe
             }
         });
 
-        share_weather = (Button) findViewById(R.id.share_weather);
-        share_weather.setOnClickListener(this);
         menu_left = (Button) findViewById(R.id.menu_left);
         menu_left.setOnClickListener(this);
         add_city = (Button) findViewById(R.id.add_city);
@@ -201,6 +219,33 @@ public class WeatherActivity extends Activity implements SwipeRefreshLayout.OnRe
         setting.setOnClickListener(this);
         about = (Button) findViewById(R.id.about);
         about.setOnClickListener(this);
+        exit = (Button) findViewById(R.id.exit_login);
+        exit.setOnClickListener(this);
+
+        canlendar = (Button) findViewById(R.id.canlendar_btn);
+        canlendar.setOnClickListener(this);
+        notes = (Button) findViewById(R.id.notes_btn);
+        notes.setOnClickListener(this);
+
+
+        // 音乐
+        play_music = findViewById(R.id.music_btn);
+        play_flag = true;
+        receiver = new MyBroadCastReceiver();
+        IntentFilter musicFilter = new IntentFilter();
+        musicFilter.addAction("com.music.complete");
+        registerReceiver(receiver,musicFilter);
+        play_music.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (play_flag) {
+                    playingMusic(PLAT_MUSIC);
+                } else {
+                    playingMusic(STOP_MUSIC);
+                }
+                play_flag = !play_flag;
+            }
+        });
 
         city_name_tv = (TextView) findViewById(R.id.city_name);
         nonce_city_name = (TextView) findViewById(R.id.nonce_city_name);
@@ -263,6 +308,13 @@ public class WeatherActivity extends Activity implements SwipeRefreshLayout.OnRe
         divide_4 = (TextView) findViewById(R.id.divide_4);
     }
 
+    private void playingMusic(int type) {
+        // 启动服务，播放音乐
+        Intent intent = new Intent(this, PlayingMusicServices.class);
+        intent.putExtra("type",type);
+        startService(intent);
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -308,18 +360,23 @@ public class WeatherActivity extends Activity implements SwipeRefreshLayout.OnRe
                 break;
         }
         setContentView(R.layout.weather_layout);
-
+        Bundle bundle = getIntent().getExtras();
+        String user_name = bundle.getString("name");
+        Toast.makeText(this,"欢迎回来:" + user_name,Toast.LENGTH_SHORT).show();
         findView();
-
+        //日历初始化
+        calendar = Calendar.getInstance();
         // 更新当前城市列表
         updateCityList(null, null);
 
         // 判断是否为首次启动APP
+      /**
         boolean isFirstStart = prefs.getBoolean("first_start", true);
         if (isFirstStart) {
             Intent intent = new Intent(this, WelcomeActivity.class);
             startActivity(intent);
         }
+        **/
 
         // 发送桌面小部件启动的广播
         Intent intent = new Intent("com.simpleweather.app.MY_WIDGETPROVIDER_BROADCAST");
@@ -378,7 +435,6 @@ public class WeatherActivity extends Activity implements SwipeRefreshLayout.OnRe
     /**
      * 查询县级代号所对应的天气代号
      *
-     * @author 梁鹏宇 2016-7-29 下午2:31:00
      */
     private void queryWeatherCode(String countyCode) {
         String address = "http://www.weather.com.cn/data/list3/city" + countyCode + ".xml";
@@ -388,7 +444,6 @@ public class WeatherActivity extends Activity implements SwipeRefreshLayout.OnRe
     /**
      * 查询天气代号所对应的天气
      *
-     * @author 梁鹏宇 2016-7-29 下午2:31:17
      */
     private void queryWeatherInfo(String weatherCode) {
         String address = "http://wthrcdn.etouch.cn/weather_mini?citykey=" + weatherCode;
@@ -398,7 +453,6 @@ public class WeatherActivity extends Activity implements SwipeRefreshLayout.OnRe
     /**
      * 根据传入的地址和类型去向服务器查询天气代号或者天气信息
      *
-     * @author 梁鹏宇 2016-7-29 下午2:31:40
      */
     private void queryFromServer(final String address, final String type, final String weatherCode) {
         showProgressDialog();
@@ -453,7 +507,6 @@ public class WeatherActivity extends Activity implements SwipeRefreshLayout.OnRe
     /**
      * 从SharedPreferences文件中读取存储的天气信息，并显示到界面上
      *
-     * @author 梁鹏宇 2016-7-29 下午2:32:21
      */
     private void showWeather(String cityName) {
         if (cityName == null) {
@@ -587,7 +640,6 @@ public class WeatherActivity extends Activity implements SwipeRefreshLayout.OnRe
     /**
      * 根据得到的天气type，返回对应的天气图片Id
      *
-     * @author 梁鹏宇 2016-7-30 下午8:26:35
      */
     public static int selectImage(String type) {
         int icId;
@@ -677,6 +729,11 @@ public class WeatherActivity extends Activity implements SwipeRefreshLayout.OnRe
             ToastUtil.showToast(WeatherActivity.this, "☜ 亲！先添加一个城市吧", Toast.LENGTH_SHORT);
             swipe_container.setRefreshing(false);
         }
+        // 播放提示音
+        Uri notification = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+        Ringtone r = RingtoneManager.getRingtone(WeatherActivity.this,notification);
+        r.play();
+
     }
 
     /**
@@ -685,24 +742,6 @@ public class WeatherActivity extends Activity implements SwipeRefreshLayout.OnRe
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.share_weather:
-                String fileName = "简约天气-分享.jpeg";
-                SharedPreferences prefs = getSharedPreferences("data_setting", MODE_PRIVATE);
-                String cityName = prefs.getString("nonce_city", null);
-                prefs = getSharedPreferences("data_city", MODE_PRIVATE);
-                final String weatherCode = prefs.getString(cityName, null);
-                if (TextUtils.isEmpty(weatherCode)) {
-                    ToastUtil.showToast(WeatherActivity.this, "☜ 亲！先添加一个城市吧", Toast.LENGTH_SHORT);
-                } else if (ScreenShotUtils.shotBitmap(WeatherActivity.this, getExternalCacheDir() + File.separator + fileName)) {
-                    ToastUtil.showToast(this, "分享天气给朋友", Toast.LENGTH_SHORT);
-                    Intent intent = new Intent(WeatherActivity.this, WeatherActivity.class);
-                    startActivity(intent);
-                    finish();
-                    ShareUtils.share(getExternalCacheDir() + File.separator + fileName, "来自简约天气的分享", WeatherActivity.this);
-                } else {
-                    ToastUtil.showToast(WeatherActivity.this, "        一键截图分享失败！\n\n请尝试打开存储空间权限哦", Toast.LENGTH_SHORT);
-                }
-                break;
             case R.id.menu_left:
                 drawer_layout.openDrawer(menu_list);
                 break;
@@ -710,7 +749,7 @@ public class WeatherActivity extends Activity implements SwipeRefreshLayout.OnRe
                 Intent intent_add_city = new Intent(this, ChooseAreaActivity.class);
                 intent_add_city.putExtra("from_weather_activity", true);
                 startActivity(intent_add_city);
-                finish();
+                //finish();
                 break;
             case R.id.choose_theme:
                 Intent intent_choose_theme = new Intent(this, ChooseThemeActivity.class);
@@ -727,10 +766,45 @@ public class WeatherActivity extends Activity implements SwipeRefreshLayout.OnRe
                 drawer_layout.closeDrawers();
                 startActivity(intent_about);
                 break;
+            case R.id.exit_login:
+                Intent intent_exit_login = new Intent(this, MainActivity.class);
+                drawer_layout.closeDrawers();
+                startActivity(intent_exit_login);
+                break;
+            case R.id.canlendar_btn:
+                drawer_layout.closeDrawers();
+                showCalenderDialog();
+                break;
+            case R.id.notes_btn:
+                String weather = type_000_tv.getText().toString();
+                if (weather.equals("")) {
+                    Toast.makeText(this,"未获取天气信息，无法进入日记功能！\n" +
+                            "请添加城市查看天气后进入！",Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                commonWeather = type_000_tv.getText().toString();
+                Intent intent_notes = new Intent(this, NotesActivity.class);
+                intent_notes.putExtra("weather",weather);
+                drawer_layout.closeDrawers();
+                startActivity(intent_notes);
+                break;
             default:
                 break;
         }
     }
+    private DatePickerDialog datePickerDialog;
+    private Calendar calendar;
+    private void showCalenderDialog() {
+        datePickerDialog = new DatePickerDialog(this, new DatePickerDialog.OnDateSetListener() {
+            @Override
+            public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+                String calender = year + "年" + (month + 1) + "月" + dayOfMonth + "日";
+            }
+        }, calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH));
+        datePickerDialog.show();
+    }
+
+
 
     /**
      * 更新城市列表:
@@ -739,7 +813,6 @@ public class WeatherActivity extends Activity implements SwipeRefreshLayout.OnRe
      * 3/(cityName, "add")-添加cityName到城市列表，并指定为nonce_city，然后展示当前城市.
      * 4/(null, null)-更新城市列表，然后展示当前城市.
      *
-     * @author 梁鹏宇 2016-8-7 下午2:07:58
      */
     private void updateCityList(String cityName, String weatherCode) {
         if (cityName != null && weatherCode == null) {
@@ -851,7 +924,6 @@ public class WeatherActivity extends Activity implements SwipeRefreshLayout.OnRe
     /**
      * 显示进度对话框
      *
-     * @author 梁鹏宇 2016-7-21 下午11:51:42
      */
     private void showProgressDialog() {
         if (progressDialog == null) {
@@ -865,12 +937,17 @@ public class WeatherActivity extends Activity implements SwipeRefreshLayout.OnRe
     /**
      * 关闭进度对话框
      *
-     * @author 梁鹏宇 2016-7-21 下午11:51:58
      */
     private void closeProgressDialog() {
         if (progressDialog != null) {
             progressDialog.dismiss();
         }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        unregisterReceiver(receiver);
     }
 
 }

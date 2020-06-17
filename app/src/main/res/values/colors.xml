@@ -3,10 +3,11 @@
 
     <color name="colorPrimary1">#00B2EE</color>
     <color name="colorPrimaryDark1">#009ACD</color>
+    <color name="main_color">#00B050</color>
 
     <color name="colorPrimary2">#EE9A00</color>
     <color name="colorPrimaryDark2">#CD8500</color>
-
+    <color name="colorWhite">#ffffff</color>
     <color name="colorPrimary3">#4EEE94</color>
     <color name="colorPrimaryDark3">#43CD80</color>
 

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="delivery_company">
+        <item>宅急送</item>
+    </string-array>
+
+    <string-array name="delivery_company_id">
+        <item>zhaijisong</item>
+    </string-array>
+
+    <string-array name="search_condition_array">
+        <item>按主题</item>
+        <item>按内容</item>
+        <item>按天气</item>
+        <item>按日期</item>
+        <item>按心情</item>
+    </string-array>
+
+</resources>

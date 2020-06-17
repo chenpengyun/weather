@@ -1,9 +1,28 @@
 <resources>
 
+    <style name="CustomCheckboxTheme" parent="@android:style/Widget.CompoundButton.CheckBox">
+        <item name="android:button">@drawable/checkbox_style</item>
+    </style>
+
+    <style name="MyEditText" parent="Theme.AppCompat.Light">
+        <item name="colorControlNormal">#c0c0c0</item>
+        <item name="colorControlActivated">#0000ff</item>
+    </style>
+
     <style name="FloatActivity" parent="Theme.AppCompat.Dialog">
         <item name="android:windowBackground">@drawable/float_box</item>
     </style>
-
+    <style name="Custom"/>
+    <style name="Custom.TabRadioButton">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:padding">5dp</item>
+        <item name="android:gravity">center</item>
+        <item name="android:button">@null</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:textColor">@color/tab_text_color_selector</item>
+    </style>
     <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
         <item name="colorPrimary">@android:color/white</item>
         <item name="colorPrimaryDark">@android:color/white</item>
